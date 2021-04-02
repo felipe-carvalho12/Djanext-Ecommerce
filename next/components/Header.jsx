@@ -20,6 +20,15 @@ const useStyles = makeStyles((theme) => ({
     grow: {
         flexGrow: 1,
     },
+    headerContainer: {
+        width: '100%',
+        marginBottom: 120
+    },
+    header: {
+        position: 'fixed',
+        top: 0,
+        width: '100%'
+    },
     logo: {
         height: '50px'
     },
@@ -162,8 +171,8 @@ export default function PrimarySearchAppBar() {
     );
 
     return (
-        <>
-            <div className={classes.grow}>
+        <div className={classes.headerContainer}>
+            <div className={classes.header}>
                 <AppBar position="static" className={classes.appbar}>
                     <Toolbar>
                         <img className={classes.logo} src={logoSrc} />
@@ -214,8 +223,8 @@ export default function PrimarySearchAppBar() {
                 </AppBar>
                 {renderMobileMenu}
                 {renderMenu}
+                <CategoriesTabs />
             </div>
-            <CategoriesTabs />
-        </>
+        </div>
     );
 }

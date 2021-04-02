@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from django.utils.text import slugify 
 from django.utils.translation import gettext_lazy as _
 from mptt.models import MPTTModel, TreeForeignKey
 
@@ -103,6 +104,10 @@ class Product(models.Model):
         verbose_name = _("Product")
         verbose_name_plural = _("Products")
 
+    @property
+    def featureImages(self):
+        return self.images.filter(is_feature=True)
+
     def get_absolute_url(self):
         return reverse("store:product_detail", args=[self.slug])
 
@@ -133,7 +138,7 @@ class ProductImage(models.Model):
     The Product Image table.
     """
 
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="product_image")
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="images")
     image = models.ImageField(verbose_name=_("image"), upload_to="images/", default="images/default.png")
     alt_text = models.CharField(verbose_name=_("Alternative text"), max_length=255, null=True, blank=True)
     is_feature = models.BooleanField(default=False)
