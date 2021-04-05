@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link'
 import { fade, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -11,7 +12,6 @@ import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import MoreIcon from '@material-ui/icons/MoreVert';
-import CategoriesTabs from './CategoriesTabs'
 
 const useStyles = makeStyles((theme) => ({
     appbar: {
@@ -87,7 +87,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function PrimarySearchAppBar() {
+export default function PrimarySearchAppBar({ children }) {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -175,7 +175,9 @@ export default function PrimarySearchAppBar() {
             <div className={classes.header}>
                 <AppBar position="static" className={classes.appbar}>
                     <Toolbar>
-                        <img className={classes.logo} src={logoSrc} />
+                        <Link href='/'>
+                            <img className={classes.logo} src={logoSrc} />
+                        </Link>
                         <div className={classes.search}>
                             <div className={classes.searchIcon}>
                                 <SearchIcon color="primary" />
@@ -223,7 +225,7 @@ export default function PrimarySearchAppBar() {
                 </AppBar>
                 {renderMobileMenu}
                 {renderMenu}
-                <CategoriesTabs />
+                {children}
             </div>
         </div>
     );

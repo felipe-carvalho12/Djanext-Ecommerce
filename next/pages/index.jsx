@@ -1,24 +1,22 @@
-import Header from '../components/Header'
+import Page from '../components/Page'
 import { Card, CardContent, CardMedia, Grid, makeStyles } from '@material-ui/core'
+import Link from 'next/link'
 
 const useStyles = makeStyles(themes => ({
-  container: {
-    padding: 20
-  }
+
 }))
 
 export default function Home({ products }) {
   const classes = useStyles()
 
   return (
-    <>
-      <Header />
-      <div className={classes.container}>
-        <Grid
-          container
-          spacing={2}
-        >
-          {products.map(product => (
+    <Page categoriesTabs>
+      <Grid
+        container
+        spacing={2}
+      >
+        {products.map(product => (
+          <Link href={`/product/${product.slug}`}>
             <Grid
               item
               xl={2}
@@ -28,22 +26,22 @@ export default function Home({ products }) {
               xs={12}
             >
               <Card>
-                <CardMedia src={product.featureImages[0].image} component="img" />
+                <CardMedia src={`${process.env.NEXT_PUBLIC_API_URL}${product.featureImages[0].image}`} component="img" />
                 <CardContent style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <span>{product.title}</span>
-                    <strong>${product.regular_price}</strong>
+                  <span>{product.title}</span>
+                  <strong>${product.regular_price}</strong>
                 </CardContent>
               </Card>
             </Grid>
-          ))}
-        </Grid>
-      </div>
-    </>
+          </Link>
+        ))}
+      </Grid>
+    </Page>
   )
 }
 
 export async function getStaticProps() {
-  const response = await fetch('http://127.0.0.1:8000/api/')
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api`)
   const products = await response.json()
 
   return {

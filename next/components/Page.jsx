@@ -1,9 +1,27 @@
 import React from 'react'
+import Header from './Header'
+import { makeStyles } from '@material-ui/core'
+import CategoriesTabs from './CategoriesTabs'
 
-export default function Page(props) {
+const useStyles = makeStyles(themes => ({
+    container: {
+        padding: 20
+    }
+}))
+
+export default function Page({ children, categoriesTabs }) {
+    const classes = useStyles()
+
     return (
-        <div>
-
-        </div>
+        <>
+            <Header>
+                {Boolean(categoriesTabs) &&
+                    <CategoriesTabs />
+                }
+            </Header>
+            <div className={classes.container}>
+                {children}
+            </div>
+        </>
     )
 }
